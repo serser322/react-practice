@@ -1,7 +1,6 @@
 import {useState} from 'react'
 import BillInput from './BillInput.js'
-import FirstPersonInput from './FirstPersonInput.js'
-import SecondPersonInput from './SecondPersonInput.js'
+import TipSelection from './TipSelection.js'
 import Amount from './Amount.js'
 import ResetButton from './ResetButton.js'
 
@@ -30,20 +29,8 @@ const App = () => {
   const [secondSelect, setSecondSelect] = useState(0.05)
 
   const firstTip = Math.round(Number(firstSelect) * Number(bill) * 100) / 100 
-  const secondTip = Math.round(Number(secondSelect) * Number(bill)* 100) / 100 
+  const secondTip = Math.round(Number(secondSelect) * Number(bill) * 100) / 100 
   const totalAmount = Math.round((1 + Number(firstSelect) + Number(secondSelect)) * Number(bill)* 100) / 100
-
-  const handleSetBill = (event) => {
-    setBill(event.target.value)
-  }
-
-  const handleSetFirstSelect = (event) => {
-    setFirstSelect(event.target.value)
-  }
-
-  const handleSetSecondSelect = (event) => {
-    setSecondSelect(event.target.value)
-  }
 
   const handleReset = () => {
     setBill('')
@@ -54,11 +41,11 @@ const App = () => {
   return (
     <>
       <h3>Tip Calculator</h3>
-      <BillInput bill={bill} onSetBillInput={handleSetBill}/>
-      <FirstPersonInput options={options} select={firstSelect} onSetFirstSelect={handleSetFirstSelect}/>
-      <SecondPersonInput options={options} select={secondSelect} onSetSecondSelect={handleSetSecondSelect}/>
+      <BillInput bill={bill} onSetBill={setBill}/>
+      <TipSelection options={options} select={firstSelect} onSetSelect={setFirstSelect}>How did first person like the service ?</TipSelection>
+      <TipSelection options={options} select={secondSelect} onSetSelect={setSecondSelect}>How did second person like the service ?</TipSelection>
       <Amount>
-        ${totalAmount} (${firstTip} + ${secondTip})
+        ${totalAmount} (${bill} + ${firstTip} + ${secondTip})
       </Amount>
       <ResetButton onReset={handleReset}>
         <div>Reset <span>🔄</span></div>
